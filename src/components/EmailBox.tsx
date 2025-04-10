@@ -261,7 +261,7 @@ const EmailBox = () => {
 
   const renderEmailContent = useCallback((content: string) => {
     try {
-      return <div className="prose max-w-none" dangerouslySetInnerHTML={{ __html: content }} />;
+      return <div className="prose max-w-none dark:prose-invert" dangerouslySetInnerHTML={{ __html: content }} />;
     } catch (error) {
       console.error('Failed to render email content:', error);
       return (
@@ -442,7 +442,7 @@ const EmailBox = () => {
           <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/4 mb-4"></div>
           <div className="h-8 bg-gray-200 dark:bg-gray-700 rounded w-3/4"></div>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 h-[600px]">
+        <div className="grid grid-cols-1 md:grid-cols-2 h-[800px]">
           <div className="border-r border-gray-200 dark:border-gray-700"></div>
           <div></div>
         </div>
@@ -472,7 +472,7 @@ const EmailBox = () => {
                 title="Copy email address"
                 aria-label="Copy email address to clipboard"
               >
-                <Copy className="w-4 h-4 dark:text-gray-300 " aria-hidden="true" />
+                <Copy className="w-4 h-4 dark:text-gray-300" aria-hidden="true" />
               </button>
               {showCopied && (
                 <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-xs py-1 px-2 rounded shadow-lg animate-fade-in-out">
@@ -531,7 +531,7 @@ const EmailBox = () => {
           </form>
         ) : (
           <>
-            <div className="font-mono text-lg mb-2 dark:text-white">{getDisplayEmail()}</div>
+            <div className="font-mono text-lg mb-2 dark:text-white break-all">{getDisplayEmail()}</div>
             <div className="inline-block relative w-64">
               <label htmlFor="domain-select" className="sr-only">Select email domain</label>
               <select
@@ -554,7 +554,7 @@ const EmailBox = () => {
         )}
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 h-[600px]">
+      <div className="grid grid-cols-1 md:grid-cols-2 h-[800px]">
         <div className="border-r border-gray-200 dark:border-gray-700 overflow-y-auto">
           {isRefreshing ? (
             <div className="flex items-center justify-center h-full">
@@ -574,7 +574,7 @@ const EmailBox = () => {
                 >
                   <div className="flex justify-between items-start mb-1">
                     <div className="font-medium truncate flex-1 dark:text-white">{email.mail_from}</div>
-                    <div className="text-sm text-gray-500 dark:text-gray-400 ml-2">{email.mail_date}</div>
+                    <div className="text-sm text-gray-500 dark:text-gray-400 ml-2 whitespace-nowrap">{email.mail_date}</div>
                   </div>
                   <div className="text-sm font-medium truncate mb-1 dark:text-gray-200">{email.mail_subject}</div>
                   <div className="text-sm text-gray-600 dark:text-gray-400 truncate">{email.mail_excerpt}</div>
@@ -586,11 +586,12 @@ const EmailBox = () => {
 
         <div className="overflow-y-auto bg-white dark:bg-gray-800">
           {selectedEmail ? (
-            <div className="p-4">
-              <div className="mb-4">
-                <div className="font-medium mb-2 dark:text-white">{selectedEmail.mail_subject}</div>
-                <div className="text-sm text-gray-600 dark:text-gray-400 mb-1">From: {selectedEmail.mail_from}</div>
-                <div className="text-sm text-gray-600 dark:text-gray-400">Date: {selectedEmail.mail_date}</div>
+            <div className="p-6">
+              <div className="mb-6">
+                <div className="text-xl font-semibold mb-4 dark:text-white">{selectedEmail.mail_subject}</div>
+                <div className="text-sm text-gray-600 dark:text-gray-400 mb-2">From: {selectedEmail.mail_from}</div>
+                <div className="text-sm text-gray-600 dark:text-gray-400 mb-4">Date: {selectedEmail.mail_date}</div>
+                <div className="h-px bg-gray-200 dark:bg-gray-700 w-full mb-6"></div>
               </div>
               {renderEmailContent(selectedEmail.mail_body || '')}
             </div>

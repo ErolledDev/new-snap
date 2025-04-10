@@ -139,15 +139,18 @@ export default defineConfig({
     compression({ algorithm: 'gzip', ext: '.gz' }),
     ViteImageOptimizer({
       jpg: {
-        quality: 80,
+        quality: 75,
         progressive: true,
+        mozjpeg: true
       },
       png: {
-        quality: 80,
+        quality: 75,
         progressive: true,
+        optimizationLevel: 3
       },
       webp: {
         lossless: true,
+        quality: 85
       }
     }),
     {
@@ -172,7 +175,16 @@ export default defineConfig({
           privacy: ['./src/pages/Privacy.tsx'],
           terms: ['./src/pages/Terms.tsx'],
           faq: ['./src/pages/FAQ.tsx']
-        }
+        },
+        assetFileNames: (assetInfo) => {
+          let extType = assetInfo.name.split('.').at(1);
+          if (/png|jpe?g|svg|gif|tiff|bmp|ico/i.test(extType)) {
+            extType = 'img';
+          }
+          return `assets/${extType}/[name]-[hash][extname]`;
+        },
+        chunkFileNames: 'assets/js/[name]-[hash].js',
+        entryFileNames: 'assets/js/[name]-[hash].js'
       }
     },
     target: 'esnext',
@@ -186,6 +198,9 @@ export default defineConfig({
     modulePreload: {
       polyfill: true
     },
+    emptyOutDir: true,
+    manifest: true,
+    ssrManifest: true,
     cache: true,
     optimizeDeps: {
       include: ['react', 'react-dom', 'react-router-dom', 'lucide-react', 'react-helmet-async', 'react-hot-toast'],
@@ -206,7 +221,7 @@ export default defineConfig({
       'X-XSS-Protection': '1; mode=block',
       'Referrer-Policy': 'strict-origin-when-cross-origin',
       'Permissions-Policy': 'camera=(), microphone=(), geolocation=()',
-      'Content-Security-Policy': "default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; font-src 'self' data:; connect-src 'self' https:;"
+      'Content-Security-Policy': "default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://pagead2.googlesyndication.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' https: data:; font-src 'self' https://fonts.gstatic.com data:; connect-src 'self' https://api.guerrillamail.com https://www.google-analytics.com; frame-src 'self' https://googleads.g.doubleclick.net https://www.google.com; object-src 'none'"
     },
     compression: true,
     watch: {
@@ -222,7 +237,7 @@ export default defineConfig({
       'X-XSS-Protection': '1; mode=block',
       'Referrer-Policy': 'strict-origin-when-cross-origin',
       'Permissions-Policy': 'camera=(), microphone=(), geolocation=()',
-      'Content-Security-Policy': "default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; font-src 'self' data:; connect-src 'self' https:;"
+      'Content-Security-Policy': "default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://pagead2.googlesyndication.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' https: data:; font-src 'self' https://fonts.gstatic.com data:; connect-src 'self' https://api.guerrillamail.com https://www.google-analytics.com; frame-src 'self' https://googleads.g.doubleclick.net https://www.google.com; object-src 'none'"
     },
     compression: true
   },
