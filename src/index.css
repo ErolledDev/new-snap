@@ -1,0 +1,234 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --toast-bg: #ffffff;
+    --toast-color: #1f2937;
+    --primary: #3B82F6;
+    --primary-dark: #2563EB;
+    --text-primary: #1F2937;
+    --text-secondary: #4B5563;
+    --text-light: #6B7280;
+  }
+
+  .dark {
+    --toast-bg: #1f2937;
+    --toast-color: #ffffff;
+    --primary: #60A5FA;
+    --primary-dark: #3B82F6;
+    --text-primary: #F9FAFB;
+    --text-secondary: #E5E7EB;
+    --text-light: #D1D5DB;
+  }
+
+  html {
+    -webkit-tap-highlight-color: transparent;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-size: 16px;
+  }
+
+  body {
+    @apply antialiased text-gray-900 dark:text-white;
+  }
+
+  h1 {
+    @apply text-4xl font-bold tracking-tight;
+    font-size: clamp(2rem, 5vw, 2.5rem);
+  }
+
+  h2 {
+    @apply text-2xl font-semibold;
+    font-size: clamp(1.5rem, 4vw, 2rem);
+  }
+
+  h3 {
+    @apply text-xl font-semibold;
+    font-size: clamp(1.25rem, 3vw, 1.5rem);
+  }
+
+  p {
+    @apply text-base leading-relaxed;
+    font-size: clamp(1rem, 2vw, 1.125rem);
+  }
+}
+
+@layer components {
+  .transition-all {
+    transition-duration: 300ms;
+  }
+
+  .hover\:shadow-md:hover {
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  }
+
+  .hover\:-translate-y-1:hover {
+    transform: translateY(-4px);
+  }
+
+  .group-open\:rotate-180 {
+    transform: rotate(180deg);
+  }
+
+  .group-open\:shadow-md {
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  }
+
+  .spinner {
+    @apply animate-spin rounded-full border-t-2 border-b-2 border-blue-500;
+  }
+
+  .refresh-spin {
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .fade-in {
+    animation: fadeIn 0.3s ease-in-out;
+  }
+
+  .slide-in {
+    animation: slideIn 0.3s ease-out;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-blue-800 dark:from-blue-400 dark:to-blue-600;
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.3s ease-in-out;
+  }
+
+  .animate-fade-in-out {
+    animation: fadeInOut 2s ease-in-out;
+  }
+
+  .animate-slide-in-right {
+    animation: slideInRight 0.3s ease-out;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  85% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Optimize font loading */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiA.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuI6fAZ9hiA.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuGKYAZ9hiA.woff2') format('woff2');
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* High contrast text improvements */
+.prose {
+  @apply text-gray-900 dark:text-gray-100;
+}
+
+.prose h1, .prose h2, .prose h3, .prose h4 {
+  @apply text-gray-900 dark:text-white font-semibold;
+}
+
+.prose p, .prose li {
+  @apply text-gray-700 dark:text-gray-300;
+}
+
+.prose a {
+  @apply text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300;
+}
+
+/* Improved focus styles */
+:focus-visible {
+  @apply outline-none ring-2 ring-blue-500 ring-offset-2 dark:ring-offset-gray-900;
+}
+
+/* Loading animations */
+.loading-shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.2) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
